@@ -1,11 +1,14 @@
 const Router = require("express");
 const route = Router();
 route.use(Router.json());
-const { Todo } = require("./db/index");
+const { Todo } = require("./db");
 
 const { createTodo, updateTodo } = require("./type");
 
-route.get("/todos", (req, res) => {});
+route.get("/todos", async (req, res) => {
+  const response = await Todo.find({});
+  res.json(JSON.stringify(response));
+});
 
 route.post("/todo", async (req, res) => {
   const bodyPayload = req.body;
@@ -20,6 +23,10 @@ route.post("/todo", async (req, res) => {
     title: req.body.title,
     description: req.body.description,
     completed: req.body.completed || false,
+  });
+
+  res.json({
+    msg: "Todo created",
   });
 });
 
@@ -38,6 +45,9 @@ route.put("/completed", async (req, res) => {
     },
     { completed: true }
   );
+  res.json({
+    msg: "Todo updated",
+  });
 });
 
 route.listen(3000);
