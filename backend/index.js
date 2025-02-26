@@ -7,7 +7,7 @@ const { createTodo, updateTodo } = require("./type");
 
 route.get("/todos", async (req, res) => {
   const response = await Todo.find({});
-  res.json(JSON.stringify(response));
+  res.json(response);
 });
 
 route.post("/todo", async (req, res) => {
@@ -41,7 +41,7 @@ route.put("/completed", async (req, res) => {
   }
   await Todo.updateOne(
     {
-      _id: id,
+      _id: req.body.id,
     },
     { completed: true }
   );
