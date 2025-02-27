@@ -4,6 +4,9 @@ route.use(Router.json());
 const { Todo } = require("./db");
 
 const { createTodo, updateTodo } = require("./type");
+const cors = require("cors");
+
+route.use(cors());
 
 route.get("/todos", async (req, res) => {
   const response = await Todo.find({});
